@@ -1,4 +1,5 @@
 import type { ServerResponse } from "node:http"
+import { getData } from "./GetData.js"
 
 export type ResponseParameter={
     success:boolean,
