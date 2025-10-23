@@ -1,23 +1,38 @@
 [
-  {
-    "id": 1,
-    "title": "The Whispering Shadows",
-    "date": "2023-10-31",
-    "location": "Ravenwood Manor",
-    "content": "Ravenwood Manor stands at the edge of the forest, abandoned for nearly a century. Locals say it was once home to the Holloway family, who vanished mysteriously one stormy night in 1892. Since then, travelers passing by after midnight have reported faint whispers drifting from its broken windows — soft voices calling their names, sometimes mimicking loved ones. The few who dared to investigate claimed to hear footsteps following them down empty corridors, shadows moving even when their lanterns were still. One man from the nearby village, desperate to prove the stories false, spent a night inside with a recorder. The next morning, only the recorder was found near the gates, playing back a single phrase in a trembling voice: 'You shouldn’t have listened.'"
-  },
-  {
-    "id": 2,
-    "title": "The Lantern by the Lake",
-    "date": "2024-08-12",
-    "location": "Black Hollow Lake",
-    "content": "Every year on the anniversary of a boating accident in 1957, a pale light appears over Black Hollow Lake. Fishermen and campers say it drifts slowly across the water, as if carried by an invisible hand. An old legend claims it belongs to a young woman named Evelyn Hart, who drowned searching for her lost fiancé during a storm. Locals have seen the light vanish suddenly when someone calls out her name. Some even claim that if you stare too long into the glow, you’ll see her reflection standing behind you — soaked, silent, and waiting for someone to take her place beneath the water."
-  },
-  {
-    "id": 3,
-    "title": "The House That Breathed",
-    "date": "2024-09-28",
-    "location": "13 Willow Street, Ashford",
-    "content": "Tenants never last long at 13 Willow Street. Every night around 3 a.m., the walls make a slow, drawn-out sigh, as if the house itself were breathing. Doors open and close without wind, and wallpaper peels away to reveal words written underneath — the same line, over and over: 'Still here.' A plumber once discovered a bricked-up crawlspace behind the basement furnace, large enough for someone to hide in. He sealed it up again without speaking a word. Now, the current owner swears that sometimes, when the air is still, she can hear breathing from inside the walls — and when she checks, the wallpaper is smooth again."
-  }
+   {
+      "id": 1,
+      "title": "The Whispering Shadows",
+      "date": "2025-10-13",
+      "location": "Ravenwood Forest, Maine",
+      "content": "Locals say that if you walk through Ravenwood Forest after midnight, you'll hear whispers following you—soft, cold, and desperate. Years ago, a group of hikers vanished there without a trace. Now, when the wind moves through the trees, some swear it carries the voices of those lost souls, still calling out for help."
+   },
+   {
+      "id": 2,
+      "title": "Room 404",
+      "date": "2024-11-02",
+      "location": "The Ashmere Hotel, London",
+      "content": "Guests who stay in Room 404 report strange disturbances—flickering lights, cold drafts, and a shadowy figure standing at the foot of their bed. The hotel records show that decades ago, a woman vanished from that very room, leaving behind only a bloodstained note that read, 'He found me.' The room has been closed to guests ever since—but sometimes, the door is found unlocked."
+   },
+   {
+      "id": 3,
+      "title": "The Mirror in the Attic",
+      "date": "2023-09-17",
+      "location": "Blackthorn Manor, Scotland",
+      "content": "A cracked antique mirror sits in the attic of Blackthorn Manor. Anyone who gazes into it claims to see a reflection that moves on its own—smiling when they don’t, blinking when they stand still. One man tried to cover the mirror with a sheet, but when he returned, the sheet was torn to shreds and his reflection was gone entirely."
+   },
+   {
+      "id": 4,
+      "title": "The Last Train Home",
+      "date": "2022-12-24",
+      "location": "Hollow Creek Station, Pennsylvania",
+      "content": "Every Christmas Eve at exactly 11:59 PM, a ghostly train pulls into the abandoned Hollow Creek Station. Its windows glow with dim yellow light, and faint figures can be seen inside—passengers frozen in time. Those who step aboard are never seen again, though sometimes, the sound of their laughter echoes through the empty tunnels beneath the station."
+   },
+   null,
+   null,
+   null,
+   null,
+   {
+      "email": "atifsarwar@gmail.com",
+      "name": ""
+   }
 ]
