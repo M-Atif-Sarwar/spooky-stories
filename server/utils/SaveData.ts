@@ -23,7 +23,7 @@ export async function saveData(res:ServerResponse,dirname:string,parseData:Objec
             //sending Response
             serverResponse(res,{
                     success:true,
-                    statusCode:res.statusCode,
+                    statusCode:200,
                     message:"Data Added successfuly",
                     data:existingData
                 }
@@ -32,9 +32,10 @@ export async function saveData(res:ServerResponse,dirname:string,parseData:Objec
          
         
      } catch (error:any) {
+        res.statusCode=400
          serverResponse(res,{
                     success:false,
-                    statusCode:res.statusCode,
+                    statusCode:400,
                     message:error.message,
                     
                 }

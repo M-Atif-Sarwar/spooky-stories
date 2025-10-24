@@ -6,7 +6,7 @@ import sanitize from "sanitize-html";
 import { serverResponse } from "../utils/ServerResponse.js";
 export async function postRequest(req:IncomingMessage,res:ServerResponse,dirname:string,){
            try {
-            const parseData=await parseBody(req,res)
+            const parseData=await parseBody(req)
              if(parseData){
                 //checking for scripting attack
                 let santize: Record<string, any>={}
@@ -14,22 +14,23 @@ export async function postRequest(req:IncomingMessage,res:ServerResponse,dirname
                     if(typeof value === 'string'){
                     santize[key]=sanitizeHtml(value,{allowedTags:["b"],allowedAttributes:{}})
                     }else{
-                        santize[key]=value
+                        throw new Error('unsafe tags are not allowed')
 
                     }
                 }
-                 console.log('sanatizte is ',sanitize)
+
                 await saveData(res,dirname,santize)
 
              }
             
            } catch (error:any) {
-               serverResponse(res,
+            res.statusCode=400
+            serverResponse(res,
                 {
                     success:false,
-                    statusCode:res.statusCode,
+                    statusCode:400,
                     message:error.message,       
                 }
-                           )
+            )
            }
 }
