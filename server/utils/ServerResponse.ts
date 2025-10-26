@@ -1,17 +1,18 @@
-import type { ServerResponse } from "node:http"
+import type { Response } from "express"
 import { getData } from "./GetData.js"
 
 export type ResponseParameter={
     success:boolean,
-    statusCode:Number
+    statusCode:number,
     message:string,
+    error?:string | Error,
     data?:any
 }
-export function serverResponse(res:ServerResponse,serverResponse:ResponseParameter){
+export function serverResponse(res:Response,serverResponse:ResponseParameter){
 
     res.setHeader("content-Type","application/json")
-    res.end(JSON.stringify(
-        serverResponse
-    ))
+    res.status(serverResponse.statusCode).json(
+     serverResponse    
+    )
 
 }
