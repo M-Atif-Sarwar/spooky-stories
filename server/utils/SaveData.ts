@@ -1,11 +1,10 @@
-import type { IncomingMessage, ServerResponse } from "node:http";
-import { parseBody } from "../utils/ParseBody.js";
 import { getData } from "./GetData.js";
-import {promises as fs} from "node:fs"
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
+import type { Response } from "express";
 import { serverResponse } from "./ServerResponse.js";
-export async function saveData(res:ServerResponse,dirname:string,parseData:Object){
+
+export async function saveData(res:Response,dirname:string,parseData:Object){
 
     const newpath=path.join("data","data.json")
      try {
