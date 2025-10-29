@@ -4,6 +4,7 @@ import type{ Request, Response } from 'express'
 import cookieParser from "cookie-parser"
 dotenv.config();
 import cors from 'cors'
+import { dbConnection } from "./dbConnection/dbConnection.js";
 export const __dirName=import.meta.dirname
 const port=process.env.PORT || 3000
 
@@ -21,7 +22,14 @@ app.use(
 );
 
 
-
-app.listen(port,()=>{
-    console.log(`server  on port ${port}`)
-})
+try {
+  await dbConnection()
+  app.listen(port,()=>{
+      console.log(`server  on port ${port}`)
+  })
+} catch (error) {
+  if (error instanceof Error) {
+    console.error("Failed to connect to DB:", error.message);
+  }
+  process.exit(1)
+}
