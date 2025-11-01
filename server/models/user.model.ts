@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import mongoose,{Schema,Document} from "mongoose";
+import mongoose,{Schema,Document,Model} from "mongoose";
 import jwt from 'jsonwebtoken'
 import type { Secret, SignOptions, JwtPayload } from 'jsonwebtoken';
 //enum for provider
@@ -109,4 +109,4 @@ UserSchema.methods.accessToken = function():string{
   return  jwt.sign(payload, secret, { expiresIn });
 };
 
-export const User=mongoose.models.User || mongoose.model<user>("User", UserSchema);
+export const User:Model<user>=mongoose.models.User || mongoose.model<user>("User", UserSchema);
