@@ -5,16 +5,21 @@ import type { Secret, SignOptions, JwtPayload } from 'jsonwebtoken';
 //enum for provider
 type Provider = 'google' | 'facebook' | 'github' | 'local';
 
-export interface user extends Document{
+export interface User extends Document{
      username:string,
      email:string,
      password:string | null,
      providerId:string | null,
      provider:Provider,
      isVerified:boolean,
-     otp?:string,
-     image:string | null
+     otp?:string | null,
+     image:string | null,
+     accessToken(): string;
+     refreshToken(): string;
+     comparePassword(password: string): Promise<boolean>;
 }
+
+
 
 // password regex for password like ABC#abc123
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -49,7 +54,7 @@ const UserSchema=new Schema({
     type: Boolean, 
     default: false 
 },
-  OTP: { 
+  otp: { 
     type: String, 
     default: null 
 },
@@ -71,7 +76,7 @@ UserSchema.methods.comparePassword=async function(password:string):Promise<boole
 }
 
 // Adding method to create access token
-UserSchema.methods.accessToken = async function():Promise<string> {
+UserSchema.methods.accessToken =function():string {
   const payload = {
      _id: this._id, 
      email: this.email 
@@ -97,7 +102,7 @@ UserSchema.methods.accessToken =function():string {
 };
 
 // Access token
-UserSchema.methods.accessToken = function():string{
+UserSchema.methods.refreshToken = function():string{
   const payload = {
      _id: this._id, 
      email: this.email 
@@ -109,4 +114,4 @@ UserSchema.methods.accessToken = function():string{
   return  jwt.sign(payload, secret, { expiresIn });
 };
 
-export const User:Model<user>=mongoose.models.User || mongoose.model<user>("User", UserSchema);
+export const User:Model<User>=mongoose.models.User || mongoose.model<User>("User", UserSchema);
