@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser"
 dotenv.config();
 import cors from 'cors'
 import { dbConnection } from "./dbConnection/dbConnection.js";
+import { authRouter } from "./handlers/authRouter.route.js";
 export const __dirName=import.meta.dirname
 const port=process.env.PORT || 3000
 
@@ -20,6 +21,9 @@ app.use(
     credentials: true, 
   })
 );
+
+// routes 
+app.use('api/auth',authRouter)
 
 
 try {

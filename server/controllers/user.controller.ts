@@ -39,7 +39,7 @@ export async function localSignup(req:Request,res:Response){
              
             // generating verification code
             const verificationCode=Math.floor((Math.random()*9000) + 1000)
-            
+            console.log(`otp`,verificationCode)
             // saving data to DataBase
            const newUser= await User.create({
                 username,
