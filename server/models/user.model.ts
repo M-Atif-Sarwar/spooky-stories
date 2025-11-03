@@ -22,7 +22,8 @@ export interface User extends Document{
 
 
 // password regex for password like ABC#abc123
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+const passwordRegex =/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+
 
 const UserSchema=new Schema({
     username: { 
@@ -64,10 +65,18 @@ const UserSchema=new Schema({
 // incrypting password middleware
 UserSchema.pre('save',async function(next){
     if(!this.isModified('password')){
-        return
+        return next()
     }
-    this.password =await bcrypt.hash(this.password,32)
-    next()
+    try {
+      this.password =await bcrypt.hash(this.password,10)
+      next()
+    } catch (error) {
+      if(error instanceof Error){
+        console.log(error)
+        next(error as Error);
+      }
+    }
+
 })
 
 // comparing our password with  the hasted password

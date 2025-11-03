@@ -11,7 +11,7 @@ export type ResponseParameter={
 export function serverResponse(res:Response,serverResponse:ResponseParameter){
 
     res.setHeader("content-Type","application/json")
-    res.status(serverResponse.statusCode).json(
+    return res.status(serverResponse.statusCode).json(
      serverResponse    
     )
 

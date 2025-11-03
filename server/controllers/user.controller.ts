@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import { User } from '../models/user.model.js'
 import { serverResponse } from '../utils/ServerResponse.js'
 import { Document } from 'mongoose'
+import { isConstructorDeclaration } from 'typescript'
 // ***************signup******************
 
 // if local get all other then image
@@ -41,17 +42,24 @@ export async function localSignup(req:Request,res:Response){
             const verificationCode=Math.floor((Math.random()*9000) + 1000)
             console.log(`otp`,verificationCode)
             // saving data to DataBase
-           const newUser= await User.create({
-                username,
-                email,
-                password,
-                providerId:null,
-                provider:"local",
-                isVerified:false,
-                otp:verificationCode
+           try {
+            const newUser= await User.create({
+                 username,
+                 email,
+                 password,
+                 providerId:null,
+                 provider:"local",
+                 isVerified:false,
+                 otp:verificationCode
+ 
+             })
+           } catch (error) {
+               if(error instanceof Error){
+                console.log(error)
+               }
+           }
 
-            })
-            serverResponse(res,{
+           return serverResponse(res,{
                 success:true,
                 statusCode:201,
                 message:'user CreatedSuccess Fully',
@@ -59,7 +67,7 @@ export async function localSignup(req:Request,res:Response){
 
          } catch (error) {
             if(error instanceof Error){
-                serverResponse(res,{
+              return   serverResponse(res,{
                 success:false,
                 statusCode:400,
                 message:error.message,

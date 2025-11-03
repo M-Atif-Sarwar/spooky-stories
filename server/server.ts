@@ -1,12 +1,12 @@
 import dotenv from "dotenv";
 import express from 'express'
-import type{ Request, Response } from 'express'
 import cookieParser from "cookie-parser"
 dotenv.config();
 import cors from 'cors'
 import { dbConnection } from "./dbConnection/dbConnection.js";
 import { authRouter } from "./handlers/authRouter.route.js";
 export const __dirName=import.meta.dirname
+
 const port=process.env.PORT || 3000
 
 const app=express()
@@ -23,7 +23,7 @@ app.use(
 );
 
 // routes 
-app.use('api/auth',authRouter)
+app.use('/api/auth',authRouter)
 
 
 try {

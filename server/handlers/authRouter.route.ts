@@ -4,5 +4,5 @@ import { codeVerification, localSignup } from '../controllers/user.controller.js
 
 export const authRouter=express.Router()
 
-router.post('/signup',localSignup)
-router.post("/verify",codeVerification)
+authRouter.post('/signup',localSignup)
+authRouter.post("/verify/:username",codeVerification)
