@@ -1,15 +1,9 @@
 import type {CookieOptions, Request,Response} from 'express'
-import mongoose from 'mongoose'
 import { User } from '../models/user.model.js'
 import { serverResponse } from '../utils/ServerResponse.js'
-import { Document } from 'mongoose'
-import { isConstructorDeclaration } from 'typescript'
-// ***************signup******************
+import { sendEmail } from '../utils/SendEmail.js'
+import { verificationEmailTemplate } from '../utils/VerficationEmailTemplate.js'
 
-// if local get all other then image
-
-// get data 
-// if useuser existed that name is
 export interface Signup{
     username:string,
     email:string,
@@ -41,6 +35,8 @@ export async function localSignup(req:Request,res:Response){
             // generating verification code
             const verificationCode=Math.floor((Math.random()*9000) + 1000)
             console.log(`otp`,verificationCode)
+            await sendEmail(email,verificationEmailTemplate(verificationCode.toString()),'Account Verifcation')
+            
             // saving data to DataBase
            try {
             const newUser= await User.create({
