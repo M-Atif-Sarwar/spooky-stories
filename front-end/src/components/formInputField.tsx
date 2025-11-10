@@ -26,12 +26,12 @@ export function FormFields<TFormValues extends FieldValues> (
 
      return <>
    {/* //   retruning Password field if label is password */}
-       { isPasswordField ?  <div className="flex flex-col gap-y-2 relative">
+       { isPasswordField ?  <div className="flex flex-col gap-y-2 relative mb-1.5">
         <label htmlFor={label}>{label} </label>
         <input
         type={hidePassword ? "text": type}
         placeholder={placeholder}
-        className="w-60 rounded-md pl-1"
+        className="w-60 rounded-md p-2 border border-gray-500/20 placeholder:text-sm"
         {...register(name)}/>
       
         {error && <span className="text-red-800 text-xs"> {error.message}</span>}
@@ -44,11 +44,11 @@ export function FormFields<TFormValues extends FieldValues> (
      </div>
                    
          :
-      <div className="flex flex-col gap-y-2">
+      <div className="flex flex-col gap-y-2 mb-1.5">
         <label htmlFor={label}>{label} </label>
         <input
         type={type}
-        className="w-60 rounded-md pl-1"
+        className="w-60 rounded-md p-2 border border-gray-500/20 placeholder:text-sm"
         placeholder={placeholder}
         {...register(name)}/>
 
