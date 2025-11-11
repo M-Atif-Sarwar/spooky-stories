@@ -9,7 +9,7 @@ export default async function AddUser(data:SignupData){
         password:data.password
     }
    try {
-      const response=await fetch('/auth/signup',{
+      const response=await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/signup`,{
         method:'POST',
         headers:{"content-Type":"application/json"},
         body:JSON.stringify(userData)

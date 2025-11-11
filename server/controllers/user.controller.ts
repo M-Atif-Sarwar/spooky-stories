@@ -38,8 +38,7 @@ export async function localSignup(req:Request,res:Response){
             await sendEmail(email,verificationEmailTemplate(verificationCode.toString()),'Account Verifcation')
             
             // saving data to DataBase
-           try {
-            const newUser= await User.create({
+           const newUser= await User.create({
                  username,
                  email,
                  password,
@@ -49,16 +48,12 @@ export async function localSignup(req:Request,res:Response){
                  otp:verificationCode
  
              })
-           } catch (error) {
-               if(error instanceof Error){
-                console.log(error)
-               }
-           }
-
+           
            return serverResponse(res,{
                 success:true,
                 statusCode:201,
                 message:'user CreatedSuccess Fully',
+                data:newUser.username
             })
 
          } catch (error) {
