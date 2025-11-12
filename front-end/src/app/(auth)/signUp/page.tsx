@@ -4,17 +4,20 @@ import { signupSchema } from '@/validations/userValidation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormFields } from '@/components/formInputField';
-import AddUser from "@/utils/signUpAction";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import AuthPostAction from "@/utils/signUpAction";
+
+//defining types
+
 export type SignupData=z.infer<typeof signupSchema>
 interface SignupUpdated{
   username: string;
   email: string;
   password: string;
 }
+
 export default function Signup()  {
     const {
         register,
