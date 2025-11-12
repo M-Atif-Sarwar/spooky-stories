@@ -8,8 +8,13 @@ import AddUser from "@/utils/signUpAction";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import AuthPostAction from "@/utils/signUpAction";
 export type SignupData=z.infer<typeof signupSchema>
-
+interface SignupUpdated{
+  username: string;
+  email: string;
+  password: string;
+}
 export default function Signup()  {
     const {
         register,
@@ -28,12 +33,17 @@ export default function Signup()  {
    
     // add signup fuction
     const signUPHandler=async(data:SignupData)=>{
+      const url=`${process.env.NEXT_PUBLIC_BASE_URL}/auth/signup`
       console.log(data)
+      const dataTosend={
+         username:data.username,
+         email:data.email,
+         password:data.password
+      }
       try {
-         const recievedData= await AddUser(data)
+         const recievedData= await AuthPostAction<SignupUpdated>(dataTosend,url,'POST')
          console.log(recievedData)
-         const username=recievedData.username
-         router.push(`/verifyAccount/${username}`)
+         router.push(`/verifyAccount/${recievedData.data}`)
       } catch (error) {
          if(error instanceof Error){
           setDisplayError(error.message)

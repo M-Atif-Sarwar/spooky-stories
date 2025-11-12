@@ -1,28 +1,29 @@
 "use server"
 import { SignupData } from "@/app/(auth)/signUp/page";
 
-export default async function AddUser(data:SignupData){
+export default async function AuthPostAction<T>(
+   data:T,
+   url:string,
+   transferMethod:'POST' | 'PUT',
+   ){
       "use server"
-    const userData={
-        username:data.username,
-        email:data.email,
-        password:data.password
-    }
+   
    try {
-      const response=await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/signup`,{
-        method:'POST',
-        headers:{"content-Type":"application/json"},
-        body:JSON.stringify(userData)
+      const response=await fetch(url,{
+        method:transferMethod,
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(data)
       })
 
        if(!response.ok){
         throw new Error('Signup failed')
        }
       console.log(response)
-      const data= await response.json()
-      console.log('data',data)
-
-      return data
+      const result= await response.json()
+      console.log('data',result)
+      
+      return result
+      
    } catch (error) {
     if(error instanceof Error)
        throw new Error(error.message)
