@@ -1,7 +1,6 @@
 'use client'
 import z, { ZodError } from "zod"
 import { verifyUserSchema } from "@/validations/userValidation"
-import AuthPostAction from "@/utils/signUpAction"
 import { useState } from "react"
 import { useParams } from "next/navigation"
 import { useRouter } from "next/navigation"
@@ -14,20 +13,27 @@ export default function VerifyAccount() {
     const username= decodeURIComponent(params?.username as string);
     
     const [otp,setOtp]=useState('')
-    const router=useRouter()
     const [validationError,setValidationError]=useState<null | string>(null)
-
+    const router=useRouter()
+    const [isdisabled,setISDiable]=useState(true)
      const verifyHandler=async()=>{
-        const url=`${process.env.NEXT_PUBLIC_BASE_URL}/auth/verify/${username}`
         const data:Verify={
             otp,
             username,
         }
         try {
-            const validatedData=verifyUserSchema.parse(data)
-            const result=await AuthPostAction<Verify>(validatedData,url,'POST')
-            console.log(result)
-            router.push('/')
+            const response=await fetch('/api/verifyAccount',{
+            method:'POST',
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(data)
+            })
+
+            const result= await response.json()
+            if(!response.ok){
+             throw new Error(result.message || 'User verification failed')
+       }
+          console.log('data',result)          
+          router.push('/')
         } catch (error) {
             if(error instanceof ZodError){
                 console.log(error.message)
@@ -46,14 +52,16 @@ export default function VerifyAccount() {
             <input 
             type="text"
             maxLength={4}
-            className="w-44 rounded-md p-1.5 border border-gray-500/20"
+            className="w-44 rounded-md p-1.5 border border-gray-500/20 mx-auto"
             value={otp}
             onChange={(e)=>setOtp(e.target.value)}
             />
             {validationError && <span>{validationError}</span>}
+            
             <button
-            className="bg-green-600 px-5 py-1.5 rounded-md w-44 "
+            className={`px-5 py-1.5 rounded-md w-44 mx-auto ${otp ? 'bg-green-600' : 'bg-green-600/10'}`}
             onClick={verifyHandler}
+            disabled={!otp}
             >Verify </button>
         </div>
        </div>
