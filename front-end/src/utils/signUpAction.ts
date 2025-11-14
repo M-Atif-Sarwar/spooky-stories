@@ -20,7 +20,7 @@ export default async function AuthPostAction<T>(
        }
       console.log(response)
       const result= await response.json()
-      console.log('data',result)
+      console.log('data',result)                              
       
       return result
       

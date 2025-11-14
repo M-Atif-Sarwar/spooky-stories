@@ -71,8 +71,12 @@ export async function localSignup(req:Request,res:Response){
 export async function codeVerification(req:Request,res:Response){
     try {
         const username=req.params.username
-        const verificationCode=req.body
-        if(!verificationCode){
+        const {otp}=req.body
+
+        // console.log(typeof(otp))
+        // console.log('recieved code ',otp)
+        
+        if(!otp){
             throw new Error ('veriffication Code is requireds')
         }
 
@@ -81,7 +85,7 @@ export async function codeVerification(req:Request,res:Response){
             throw new Error('user does not exist ')
         }
 
-        if(!verifyUser.otp === verificationCode){
+        if(verifyUser.otp !== otp){
             throw new Error("Invalid Code")
         }
 
