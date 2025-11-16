@@ -3,6 +3,7 @@ import { User } from '../models/user.model.js'
 import { serverResponse } from '../utils/ServerResponse.js'
 import { sendEmail } from '../utils/SendEmail.js'
 import { verificationEmailTemplate } from '../utils/VerficationEmailTemplate.js'
+import { ServerErrors } from '../utils/serverErrors.js'
 
 export interface Signup{
     username:string,
@@ -132,5 +133,64 @@ export async function codeVerification(req:Request,res:Response){
             })
         }
     }
+
+}
+
+export async function loginController(req:Request, res:Response){
+    try {
+        const {email,password}=req.body
+        console.log('email',email)
+        console.log('password ',password) 
+
+        if(!email || !password){
+            throw new ServerErrors('all field are required',400)
+        }
+
+        const existedUser=await User.findOne({email})
+        if(!existedUser){
+            throw new ServerErrors('User Not found',400)
+        }
+
+        const isPasswordCorrect=await existedUser.comparePassword(password)
+        if(!isPasswordCorrect){
+            throw new ServerErrors("Incorrect Password",400)
+        }
+        // checking if user ius verified or not
+
+        // sending Token after login verification
+         const [accessToken,refreshToken]=await generateToken(String(existedUser?._id))
+
+         if (!accessToken || !refreshToken) {
+            throw new ServerErrors("Token generation failed",501);
+          }
+
+          // sending cookies and response
+         const cookieOptions:CookieOptions={
+            httpOnly:true,
+            secure:true,
+            sameSite:"strict"
+         }
+         
+         res.cookie("accessToken",accessToken,cookieOptions)
+         res.cookie("refreshToken",refreshToken,cookieOptions)
+
+        return  serverResponse(res,{
+                success:true,
+                statusCode:200,
+                message:'Logged in successfuly',
+                data:existedUser
+            })
+    } catch (error) {
+        if(error instanceof Error){
+        const statusCode = error instanceof ServerErrors ? error.statusCode : 500;
+       return serverResponse(res,{
+                success:false,
+                statusCode:statusCode,
+                error:error,
+                message:error.message
+            
+            })
+    }
+}
 
 }
