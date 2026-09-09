@@ -146,7 +146,7 @@ export async function loginController(req:Request, res:Response){
             throw new ServerErrors('all field are required',400)
         }
 
-        const existedUser=await User.findOne({email})
+        const existedUser=await User.findOne({email}).select("-password -provider -providerId")
         if(!existedUser){
             throw new ServerErrors('User Not found',400)
         }
