@@ -1,0 +1,19 @@
+FROM node:20.18.3-alpine AS install-packages
+WORKDIR /spooky-stories/front-end
+COPY package.json package-lock.json ./
+RUN npm install 
+
+FROM node:20.18.3-alpine AS build-app
+WORKDIR /spooky-stories/front-end
+COPY --from=install-packages /spooky-stories/front-end/node_modules ./node_modules
+COPY . .
+RUN npm run build
+
+FROM node:20.18.3-alpine AS run-app
+WORKDIR /spooky-stories/front-end
+COPY --from=install-packages /spooky-stories/front-end/node_modules ./node_modules
+COPY --from=build-app /spooky-stories/front-end/package.json ./package.json
+COPY --from=build-app /spooky-stories/front-end/.next ./.next
+COPY --from=build-app /spooky-stories/front-end/public ./public
+EXPOSE 3000
+CMD ["npm", "start"]
