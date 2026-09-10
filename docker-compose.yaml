@@ -4,7 +4,7 @@ services:
     build:
       context: ./front-end
       dockerfile: Dockerfile.front
-    image: frontend:v1
+    image: matifsarwar/frontend:v2
     container_name: spooky-stories-frontend
     ports:
       - "3000:3000"
