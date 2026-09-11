@@ -4,8 +4,22 @@ services:
     build:
       context: ./front-end
       dockerfile: Dockerfile.front
-    image: matifsarwar/frontend:v2
+    image: matifsarwar/frontend:v3
     container_name: spooky-stories-frontend
     ports:
       - "3000:3000"
+    depends_on:
+      - backend
     restart: unless-stopped
+
+  backend:
+      build:
+        context: ./server
+        dockerfile: Dockerfile.backend
+      ports:
+        - "4000:4000"
+      image: matifsarwar/backend:v1
+      container_name: spooky-stories-backend
+      env_file:
+        - ./server/.env
+      restart: unless-stopped

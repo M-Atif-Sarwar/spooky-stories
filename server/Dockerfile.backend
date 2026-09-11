@@ -1,0 +1,30 @@
+FROM node:20.18.3-alpine AS install-dependencies
+RUN apk update
+WORKDIR /spooky-stories/server
+COPY package.json package-lock.json ./
+RUN npm ci
+
+# building a app
+FROM node:20.18.3-alpine AS build-app
+WORKDIR /spooky-stories/server
+COPY --from=install-dependencies /spooky-stories/server/node_modules ./node_modules
+COPY . .
+RUN npm run build
+
+
+# removing dev dependencies
+FROM node:20.18.3-alpine AS  production
+WORKDIR /spooky-stories/server
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
+
+#running the app
+FROM node:20.18.3-alpine AS run-app
+WORKDIR /spooky-stories/server
+COPY --from=production /spooky-stories/server/node_modules ./node_modules
+COPY --from=build-app /spooky-stories/server/dist ./dist
+COPY --from=build-app /spooky-stories/server/package.json ./package.json
+EXPOSE 4000
+CMD ["npm", "start"]
+
+

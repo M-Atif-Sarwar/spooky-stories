@@ -4,9 +4,10 @@
   "main": "server.ts",
   "type": "module",
   "scripts": {
-    "start": "node --loader ts-node/esm server.ts",
+    "dev": "node --loader ts-node/esm server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc",
+    "start": "node dist/server.js"
   },
   "author": "M Atif Sarwar",
   "license": "ISC",
