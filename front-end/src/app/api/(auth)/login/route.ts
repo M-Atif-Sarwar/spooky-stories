@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req:NextRequest){
     const {email,password}=await req.json()
     console.log(`email " ${email}, password ${password}`)
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`
+    const url = `${process.env.API_URL}/auth/login`
     console.log(url)
 
     if(!email || !password){
