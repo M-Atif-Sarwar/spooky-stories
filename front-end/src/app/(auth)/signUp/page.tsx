@@ -36,7 +36,6 @@ export default function Signup()  {
    
     // add signup fuction
     const signUPHandler=async(data:SignupData)=>{
-      const url=`${process.env.NEXT_PUBLIC_BASE_URL}/auth/signup`
       console.log(data)
       const dataTosend={
          username:data.username,
@@ -44,7 +43,7 @@ export default function Signup()  {
          password:data.password
       }
       try {
-         const recievedData= await AuthPostAction<SignupUpdated>(dataTosend,url,'POST')
+         const recievedData= await AuthPostAction<SignupUpdated>(dataTosend,'POST')
          console.log(recievedData)
          router.push(`/verifyAccount/${recievedData.data}`)
       } catch (error) {

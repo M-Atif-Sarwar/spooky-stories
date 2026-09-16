@@ -4,7 +4,7 @@ services:
     build:
       context: ./front-end
       dockerfile: Dockerfile.front
-    image: matifsarwar/frontend:v3
+    image: matifsarwar/frontend:v4
     container_name: spooky-stories-frontend
     ports:
       - "3000:3000"
@@ -20,7 +20,7 @@ services:
         dockerfile: Dockerfile.backend
       ports:
         - "4000:4000"
-      image: matifsarwar/backend:v1
+      image: matifsarwar/backend:v2
       container_name: spooky-stories-backend
       env_file:
         - ./server/.env

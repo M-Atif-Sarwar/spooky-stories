@@ -3,12 +3,12 @@ import { SignupData } from "@/app/(auth)/signUp/page";
 
 export default async function AuthPostAction<T>(
    data:T,
-   url:string,
    transferMethod:'POST' | 'PUT',
    ){
       "use server"
    
    try {
+      const url = `${process.env.API_URL}/auth/signup`
       const response=await fetch(url,{
         method:transferMethod,
         headers:{"Content-Type":"application/json"},
