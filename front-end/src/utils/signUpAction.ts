@@ -1,12 +1,11 @@
 "use server"
-import { SignupData } from "@/app/(auth)/signUp/page";
 
 export default async function AuthPostAction<T>(
    data:T,
    transferMethod:'POST' | 'PUT',
    ){
-      "use server"
-   
+      
+
    try {
       const url = `${process.env.API_URL}/auth/signup`
       const response=await fetch(url,{
@@ -15,17 +14,19 @@ export default async function AuthPostAction<T>(
         body:JSON.stringify(data)
       })
 
-       if(!response.ok){
-        throw new Error('Signup failed')
-       }
-      console.log(response)
       const result= await response.json()
-      console.log('data',result)                              
+       console.log(response)
+
+       if(!response.ok){
+         console.error("Signup failed:", response.status, result)
+         return { success: false, error: result?.message || "Signup failed", data: null }
+       }
+     
+       return { success: true, error: null, data: result }                        
       
-      return result
       
-   } catch (error) {
-    if(error instanceof Error)
-       throw new Error(error.message)
+   } catch (error: any) {
+      console.error("Error during signup:", error)
+       return { success: false, error: "Something went wrong. Please try again.", data: null }
    }
 } 
