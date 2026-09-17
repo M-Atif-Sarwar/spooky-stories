@@ -6,8 +6,12 @@ on:
   #   branches: [main]
 
 jobs:
-  test:
+# frontend test
+  test-frontend:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./front-end
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -17,8 +21,24 @@ jobs:
       - run: npm run build
       - run: npm test
 
+# backend test
+  test-backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+
+# build images and pushing to docker hub
   build-image:
-    needs: test
+    needs: [test-frontend, test-backend]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,7 +48,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
+        
+        #building backend frontend image
       - name: Build and push frontend image
         uses: docker/build-push-action@v4
         with:
@@ -38,7 +59,8 @@ jobs:
           build-args: |
             API_URL=${{ secrets.API_URL }}/api
           tags: ${{ secrets.DOCKER_USERNAME }}/frontend:latest
-
+            
+        # building backeend images
       - name: Build and push backend image
         uses: docker/build-push-action@v4
         with:
