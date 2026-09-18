@@ -51,6 +51,10 @@ export async function localSignup(req:Request,res:Response){
  
              })
            
+
+            sendEmail(email, verificationEmailTemplate(verificationCode.toString()), 'Account Verifcation')
+            .catch(err => console.error('Email send failed:', err.message))
+
            return serverResponse(res,{
                 success:true,
                 statusCode:201,
