@@ -49,7 +49,7 @@ export default function Signup()  {
                setDisplayError(recievedData.error)
                return
                }
-         router.push(`/verifyAccount/${recievedData.data}`)
+         router.push(`/verifyAccount/${recievedData.data.username}`)
       } catch (error: any) {
          if(error instanceof Error){
           setDisplayError(error.message)

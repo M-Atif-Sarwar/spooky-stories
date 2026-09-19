@@ -11,6 +11,7 @@ export default function VerifyAccount() {
     // getting prams
     const params=useParams()
     const username= decodeURIComponent(params?.username as string);
+    console.log('username : ',username)
     
     const [otp,setOtp]=useState('')
     const [validationError,setValidationError]=useState<null | string>(null)
