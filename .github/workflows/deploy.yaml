@@ -2,8 +2,8 @@ name: CI/CD Pipeline
 
 on:
   workflow_dispatch:
-  # push:
-  #   branches: [main]
+  push:
+    branches: [main]
 
 jobs:
 # frontend test
@@ -68,3 +68,13 @@ jobs:
           file: ./server/Dockerfile.backend
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/backend:latest
+
+  deploy:
+    needs: build-image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy fronetend
+        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_FRONTEND }}"
+       
+      - name: Trigger Render deploy - backend
+        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_BACKEND }}"
