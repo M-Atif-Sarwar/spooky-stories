@@ -44,12 +44,13 @@ export default function Signup()  {
       }
       try {
          const recievedData= await AuthPostAction<SignupUpdated>(dataTosend,'POST')
-         console.log(recievedData)
+         console.log('reciveced data is ',recievedData)
            if (!recievedData.success) {
                setDisplayError(recievedData.error)
                return
                }
-         router.push(`/verifyAccount/${recievedData.data.username}`)
+      //   console.log('signup successful',recievedData.data)
+         router.push(`/verifyAccount/${recievedData.data.data}`)
       } catch (error: any) {
          if(error instanceof Error){
           setDisplayError(error.message)
