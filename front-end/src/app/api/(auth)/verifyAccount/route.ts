@@ -5,7 +5,7 @@ export async function POST(req:NextRequest){
     if(!recievedData){
       throw new Error('All fiels are required')
     }
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/verify/${recievedData.username}`
+    const url = `${process.env.API_URL}/auth/verify/${recievedData.username}`
 
     // sending request to custom backen end and setting cookies
     try {
